@@ -15,7 +15,7 @@ Paste this into your HA Terminal & SSH:
 ```bash
 mkdir -p /config/www && \
 curl -sL -o /config/www/aqi_dashboard.html \
-  https://raw.githubusercontent.com/YOUR_USERNAME/apc1001u-ha/main/aqi_dashboard.html && \
+  https://raw.githubusercontent.com/raku306363s/apc1001u-ha/main/aqi_dashboard.html && \
 ha core restart
 ```
 
