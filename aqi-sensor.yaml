@@ -1,0 +1,68 @@
+# ╔══════════════════════════════════════════════════════════╗
+# ║  APC1001U Air Quality Monitor — ESPHome Configuration   ║
+# ║  github.com/YOUR_USERNAME/apc1001u-ha                   ║
+# ╚══════════════════════════════════════════════════════════╝
+#
+# WIRING:
+#   APC1 pin 1 (VDD)     → 5V   (NOT 3.3V)
+#   APC1 pin 2 (GND)     → GND
+#   APC1 pin 4 (UART_RX) → GPIO17
+#   APC1 pin 5 (UART_TX) → GPIO16
+#   Pins 3, 6, 7, 8      → leave unconnected
+
+esphome:
+  name: aqi-sensor
+  friendly_name: "AQI Sensor"
+
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+
+# ── Pull component directly from GitHub — no local files needed ──
+external_components:
+  - source:
+      type: git
+      url: https://github.com/YOUR_USERNAME/apc1001u-ha
+      ref: main
+    components: [apc1001u]
+
+# ── Edit these ───────────────────────────────────────────────────
+wifi:
+  ssid: "YOUR_WIFI_SSID"
+  password: "YOUR_WIFI_PASSWORD"
+  ap:
+    ssid: "aqi-sensor-fallback"
+    password: "aqi12345"
+# ─────────────────────────────────────────────────────────────────
+
+captive_portal:
+api:
+logger:
+ota:
+  platform: esphome
+
+uart:
+  id: uart_bus
+  rx_pin: GPIO16
+  tx_pin: GPIO17
+  baud_rate: 9600
+
+apc1001u:
+  uart_id: uart_bus
+  pm1_0:
+    name: "PM1.0"
+  pm2_5:
+    name: "PM2.5"
+  pm10:
+    name: "PM10"
+  tvoc:
+    name: "TVOC"
+  eco2:
+    name: "eCO2"
+  temperature:
+    name: "Temperature"
+  humidity:
+    name: "Humidity"
+  aqi:
+    name: "AQI"
